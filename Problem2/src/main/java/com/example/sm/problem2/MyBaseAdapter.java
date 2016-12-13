@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
-import android.widget.TextView;
+
 import java.util.ArrayList;
 
 public class MyBaseAdapter extends BaseAdapter implements AdapterView.OnItemClickListener{
@@ -17,6 +17,15 @@ public class MyBaseAdapter extends BaseAdapter implements AdapterView.OnItemClic
     LayoutInflater mLayoutInflater = null;
     public int selected_position;
 
+    Employee employee;
+
+    String name;
+    Integer age;
+    Integer salary;
+    EditText edit_age;
+    EditText edit_name;
+    EditText edit_salary;
+
     MyBaseAdapter(  Context context, ArrayList<Employee> data){
         mContext = context;
         mData = data;
@@ -25,14 +34,16 @@ public class MyBaseAdapter extends BaseAdapter implements AdapterView.OnItemClic
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Employee employee = (Employee) parent.getItemAtPosition(position);
+        employee = (Employee) parent.getItemAtPosition(position);
 
-        String name = employee.getName();
-        Integer age = employee.getAge();
-        Integer salary = employee.getSalary();
-        EditText edit_name = (EditText) view.getRootView().findViewById(R.id.edit_name);
-        EditText edit_age = (EditText) view.getRootView().findViewById(R.id.edit_age);
-        EditText edit_salary = (EditText) view.getRootView().findViewById(R.id.edit_salary);
+        name = employee.getName();
+        age = employee.getAge();
+        salary = employee.getSalary();
+
+        edit_name = (EditText) view.getRootView().findViewById(R.id.edit_name);
+        edit_age = (EditText) view.getRootView().findViewById(R.id.edit_age);
+        edit_salary = (EditText) view.getRootView().findViewById(R.id.edit_salary);
+
         edit_name.setText(name);
         edit_age.setText(age.toString());
         edit_salary.setText(salary.toString());
@@ -56,16 +67,28 @@ public class MyBaseAdapter extends BaseAdapter implements AdapterView.OnItemClic
 
     public void add(Employee employee){
         mData.add(employee);
+
         notifyDataSetChanged();
     }
 
     public void delete(int index){
         mData.remove(index);
+
         notifyDataSetChanged();
+    }
+    public int getpos(){
+        return  selected_position;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // need something here
+
+        if (convertView == null) {
+            LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.list_view_item_layout, parent, false);
+        }
+
+
+        return convertView;
     }
 }

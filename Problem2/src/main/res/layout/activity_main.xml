@@ -40,7 +40,9 @@
             android:inputType="textPersonName"
             android:hint="Input name"
             android:ems="10"
-            android:id="@+id/edit_name" />
+            android:id="@+id/edit_name"
+
+            />
 
         <EditText
             android:layout_width="match_parent"
